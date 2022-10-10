@@ -6,108 +6,54 @@ import SearchBox from './components/search-box/search-box';
 import './App.css';
 
 const App = () => {
-  console.log('REDER');
   const [searchField, setSearchField] = useState(''); 
-  const [robots, setRobots] = useState([]);
-  const [filteredRobots, setFilterRobots] = useState(robots);
+  const [pokemons, setPokemons] = useState([]);
+  const [filteredPokemons, setFilterPokemons] = useState(pokemons);
   const [allPokemon, setAllPokemon] = useState([]);
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       const response = await fetch('https://pokeapi.co/api/v2/pokemon/?offset=0&limit=890')
       const data = await response.json();
-      setRobots(data.results);
-      await console.log(data.results)
+      setPokemons(data.results);
 
-      function getPokemon(result) {
+      const getPokemon = (result) => {
         result.forEach(async (pokemon) => {
-          const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
+          const response = await fetch(pokemon.url);
           const data = await response.json();
-  
+          
           setAllPokemon(current => { return [...current, data] });
         });
       }
-  
       getPokemon(data.results);
     }
 
     fetchData();
   }, []);
 
-  console.log(allPokemon)
-
   useEffect(() => {
-    const newFilteredRobots = robots.filter((robot) => {
-      return robot.name.toLocaleLowerCase().includes(searchField);
+    const newFilteredPokemons = pokemons.filter((pokemon) => {
+      return pokemon.name.toLocaleLowerCase().includes(searchField);
     });
 
-    setFilterRobots(newFilteredRobots);
-  }, [robots, searchField]);
+    setFilterPokemons(newFilteredPokemons);
+  }, [pokemons, searchField]);
 
   const onSearchChange = (event) => {
     const searchFieldString = event.target.value.toLocaleLowerCase();
     setSearchField(searchFieldString);
   }
-
+  console.log(allPokemon)
   return (
     <div className="App">
-      <h1 className='app-title'>Robots Dex</h1>
+      <h1 className='app-title'>Poke Dex</h1>
       <SearchBox 
         onSearchChange={onSearchChange} 
-        placeholder='search robots' 
+        placeholder='search pokemons' 
         className='search-box'/>
-      <CardList robots={filteredRobots} />
+      <CardList pokemons={filteredPokemons}/>
     </div>   
   );
 }
-
-
-
-// class App extends Component {
-//   constructor() {
-//     super();
-    
-//     this.state = {
-//       robots: [],
-//       searchField: []
-//     };
-//   }
-
-  // componentDidMount() {
-  //   fetch('https://jsonplaceholder.typicode.com/users')
-  //     .then((response) => response.json())
-  //     .then((result) => 
-  //       this.setState(() => {
-  //           return { robots: result }
-  //         })
-  //     );
-  // }
-
-//   onSearchChange = (event) => {
-//     const searchField = event.target.value.toLocaleLowerCase();
-//     this.setState(() => {
-//       return { searchField }
-//     });
-//   }
-  
-//   render() {
-//     const { robots, searchField } = this.state;
-//     const { onSearchChange } = this;
-//     const filteredRobots = robots.filter((robot) => {
-//       return robot.name.toLocaleLowerCase().includes(searchField);
-//     });
-
-//     return (
-//       <div className="App">
-//         <h1 className='app-title'>Robots Dex</h1>
-//         <SearchBox 
-//           onSearchChange={onSearchChange} 
-//           placeholder='search robots' 
-//           className='search-box'/>
-//         <CardList robots={filteredRobots} />
-//       </div>
-//     );
-//   }
-// }
 
 export default App;

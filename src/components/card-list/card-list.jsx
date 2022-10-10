@@ -2,12 +2,12 @@ import Card from './../card/card';
 import './card-list.css';
 
 const CardList = (props) => {
-    const { robots } = props;
+    const { pokemons } = props;
     return (
         <div className="card-list">
-            {robots.map((robot) => {
+            {pokemons.map((pokemon) => {
                 return (
-                    <Card robot={robot} key={robot.name}/>
+                    <Card pokemon={pokemon} key={pokemon.name}/>
                 );
             })}
         </div>
