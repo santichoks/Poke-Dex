@@ -1,8 +1,10 @@
 
 <h1>Poke-Dex</h1>
 <p align="center">
-    <img src="?raw=true" height="300"/>
+    <img src="https://github.com/santichoks/Poke-Dex/blob/main/img/demo1.gif?raw=true" height="300"/>
+    <img src="https://github.com/santichoks/Poke-Dex/blob/main/img/demon2.gif?raw=true" height="300"/>
 </p>
+
 <p align="center">
     :point_right: <a href="https://santichoks.github.io/Poke-Dex/">Click</a>
 </p>
